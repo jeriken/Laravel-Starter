@@ -25,11 +25,9 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
-  
         $formData['password'] = bcrypt($request->password);
   
         $user = User::create($formData);  
-
         $data = $user;
         $data->token = $user->createToken('tesBUMN')->accessToken;
   
