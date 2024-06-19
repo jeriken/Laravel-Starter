@@ -36,7 +36,7 @@ const settings = [
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <template v-for="link in links">
-                                    <NavLink :href="link.href" :active="link.href == this.$route.path ? true : false">
+                                    <NavLink :href="link.href" :active="link.href == $route.path ? true : false">
                                         {{ link.label }}
                                     </NavLink>
                                 </template>
@@ -51,7 +51,7 @@ const settings = [
                                         <span class="inline-flex rounded-md">
                                             <button type="button"
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white  hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                                Razin
+                                                {{ userData.name }}
 
                                                 <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 20 20" fill="currentColor">
@@ -97,8 +97,8 @@ const settings = [
                 <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <template v-for="link in links">
-                            <ResponsiveNavLink :href="link.href" :active="link.href == this.$route.path ? true : false">
-                                Dashboard
+                            <ResponsiveNavLink :href="link.href" :active="link.href == $route.path ? true : false">
+                                {{ link.label }}
                             </ResponsiveNavLink>
                         </template>
                     </div>
@@ -107,9 +107,9 @@ const settings = [
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="px-4">
                             <div class="font-medium text-base text-gray-800">
-                                Razin
+                                {{ userData.name }}
                             </div>
-                            <div class="font-medium text-sm text-gray-500">tes@mail.com</div>
+                            <div class="font-medium text-sm text-gray-500">{{ userData.email }}</div>
                         </div>
 
                         <div class="mt-3 space-y-1">
@@ -148,43 +148,30 @@ export default {
     },
     methods: {
         getUserData() {
-            let email = this.email
-            let password = this.password
+            let token = 'Bearer ' + localStorage.getItem('token')
 
             //send server with axios
-            axios.post('http://localhost:8000/api/auth/login',
-                {
-                    email,
-                    password,
-                },
+            axios.get('/api/profile',
                 {
                     headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Authorization': token
                     }
                 })
                 .then(response => {
 
                     if (response.data) {
-
-                        //set token
-                        localStorage.setItem('token', response.data.token)
-
-                        //redirect ke halaman dashboard
-                        this.$router.push('/dashboard') 
+                        this.userData = response.data
                     }
-
-                    //set state loginFailed to false
-                    this.loginFailed = false
-
 
                 }).catch(error => {
                     //set validation dari error response
-                    this.validation = error.response.data
-
-                    //set state loginFailed to true
-                    this.loginFailed = true
+                    this.userData = error.response.data
                 })
         }
+    },
+    mounted() {
+        this.getUserData();
     }
 };
 </script>

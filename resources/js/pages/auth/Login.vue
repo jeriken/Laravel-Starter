@@ -75,7 +75,7 @@ export default {
             let password = this.password
 
             //send server with axios
-            axios.post('http://localhost:8000/api/auth/login',
+            axios.post('/api/auth/login',
                 {
                     email,
                     password,

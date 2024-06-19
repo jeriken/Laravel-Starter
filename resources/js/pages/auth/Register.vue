@@ -98,7 +98,7 @@ export default {
             let password_confirmation = this.passwordConfirmation
 
             //send server with axios
-            axios.post('http://localhost:8000/api/auth/register',
+            axios.post('/api/auth/register',
                 {
                     name,
                     email,

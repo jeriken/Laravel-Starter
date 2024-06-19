@@ -5,10 +5,10 @@ import AdminLayout from './layout/AdminLayout.vue';
 
 <template>
     <div id="app">
-        <div v-if="this.$route.meta.layout == 'Admin'">
+        <div v-if="$route.meta.layout == 'Admin'">
             <AdminLayout>
                 <template #header>
-                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ this.$route.meta.title }}</h2>
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $route.meta.title }}</h2>
                 </template>
                 <router-view />
             </AdminLayout>
