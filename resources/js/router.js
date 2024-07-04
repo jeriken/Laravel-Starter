@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage.vue'
 import Login from './pages/auth/Login.vue'
 import Register from './pages/auth/Register.vue'
 import Dashboard from './pages/Dashboard.vue'
+import Post from './pages/post/Post.vue'
 
 
 export default createRouter({
@@ -31,6 +32,12 @@ export default createRouter({
             name: 'dashboard',
             component: Dashboard,
             meta: { layout: 'Admin', title: 'Dashboard' },
+        },
+        {
+            path: '/post',
+            name: 'post',
+            component: Post,
+            meta: { layout: 'Admin', title: 'Postingan' },
         },
     ]
 })

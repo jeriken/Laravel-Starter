@@ -9,7 +9,7 @@ const showingNavigationDropdown = ref(false);
 
 const links = [
     { href: '/dashboard', label: 'Dashboard' },
-    { href: '/support', label: 'Support' },
+    { href: '/post', label: 'Postingan' },
 ]
 
 const settings = [
